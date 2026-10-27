@@ -1,11 +1,59 @@
 <!DOCTYPE html>
 <html lang="hr">
-    <head>
-        <meta charset="UTF-8">
-        <title>RS Vjezba 1</title>
-    </head>
-    <body>
-        <h2>Ovo je static stranica za prvu vjezbu RS</h2>
-        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTtFHwS_4TObUpJ3S1v8-mzw7dyjLnOUmQOotoy8Uomzg&s=10">
-    </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ekrani</title>
+</head>
+<body>
+  <h1>Ekrani</h1>
+
+  <h2>Svi ekrani</h2>
+  <button onclick="ucitaj()">Osvježi popis</button>
+  <ul id="lista"></ul>
+
+  <h2>Dohvati ekran po ID-u</h2>
+  <input id="id_ekrana" type="number" placeholder="ID">
+  <button onclick="dohvatiJedan()">Dohvati</button>
+  <p id="rezultat"></p>
+
+  <h2>Dodaj novi ekran</h2>
+  <input id="naziv" placeholder="Naziv ekrana">
+  <button onclick="dodaj()">Dodaj</button>
+
+  <script>
+    async function ucitaj() {
+      const odgovor = await fetch('/ekrani');
+      const ekrani = await odgovor.json();
+      const lista = document.getElementById('lista');
+      lista.innerHTML = '';
+      ekrani.forEach(e => {
+        const li = document.createElement('li');
+        li.textContent = `${e.id}: ${e.naziv}`;
+        lista.appendChild(li);
+      });
+    }
+
+    async function dohvatiJedan() {
+      const id = document.getElementById('id_ekrana').value;
+      const odgovor = await fetch(`/ekrani/${id}`);
+      const podatak = await odgovor.json();
+      document.getElementById('rezultat').textContent =
+        podatak.naziv ? `${podatak.id}: ${podatak.naziv}` : podatak.poruka;
+    }
+
+    async function dodaj() {
+      const naziv = document.getElementById('naziv').value;
+      await fetch('/ekrani', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ naziv })
+      });
+      document.getElementById('naziv').value = '';
+      ucitaj();
+    }
+
+    ucitaj();
+  </script>
+</body>
 </html>
