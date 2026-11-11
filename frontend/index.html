@@ -21,6 +21,14 @@
   <input id="naziv" placeholder="Naziv ekrana">
   <button onclick="dodaj()">Dodaj</button>
 
+  <h2>Podaci iz Pythona</h2>
+  <h3>Katalog ekrana</h3>
+  <ul id="p_ekrani"></ul>
+  <h3>Recenzije</h3>
+  <ul id="p_recenzije"></ul>
+  <h3>Opcije dostave</h3>
+  <ul id="p_dostava"></ul>
+
   <script>
     async function ucitaj() {
       const odgovor = await fetch('/ekrani');
@@ -53,7 +61,30 @@
       ucitaj();
     }
 
+    function napuni(idLista, stavke, formatiraj){
+      const lista = document.getElementById(idLista);
+      lista.innerHTML = '';
+      stavke.forEach(s=>{
+        const li = document.createElement('li');
+        li.textContent = formatiraj(s);
+        lista.appendChild(li);
+      });
+    }
+
+    async function ucitajPodatke(){
+      const odgovor = await fetch('/podaci.json');
+      const podaci = await odgovor.json();
+
+      napuni('p_ekrani', podaci.ekrani,
+        e => `${e.naziv} (${e.dijagonala}")-${e.cijena.toFixed(2)} eur`);
+      napuni('p_recenzije', podaci.recenzije,
+        r => `${r.korisnik} (${r.ocjena}/5): ${r.komentar}`);
+      napuni('p_dostava', podaci.dostava,
+        d => `${d.vrsta}, ${d.cijena.toFixed(2)} eur, ${d.dana} dana`);
+    }
+
     ucitaj();
+    ucitajPodatke();
   </script>
 </body>
 </html>

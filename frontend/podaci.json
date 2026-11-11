@@ -1,0 +1,56 @@
+{
+  "ekrani": [
+    {
+      "id": 1,
+      "naziv": "LCD",
+      "dijagonala": 24,
+      "cijena": 199.9
+    },
+    {
+      "id": 2,
+      "naziv": "LED",
+      "dijagonala": 27,
+      "cijena": 299.9
+    },
+    {
+      "id": 3,
+      "naziv": "OLED",
+      "dijagonala": 32,
+      "cijena": 499.9
+    }
+  ],
+  "recenzije": [
+    {
+      "korisnik": "Bare",
+      "ocjena": 5,
+      "komentar": "Bas je odlican ovaj OLED"
+    },
+    {
+      "korisnik": "Pero",
+      "ocjena": 4,
+      "komentar": "Bas je vrlo dobar ovaj LED"
+    },
+    {
+      "korisnik": "Maro",
+      "ocjena": 3,
+      "komentar": "Bas je dobar ovaj LCD"
+    }
+  ],
+  "dostava": [
+    {
+      "vrsta": "Standard",
+      "cijena": 3.5,
+      "dana": 5
+    },
+    {
+      "vrsta": "Brzo",
+      "cijena": 8.0,
+      "dana": 2
+    },
+    {
+      "vrsta": "Osobno preuzimanje",
+      "cijena": 0,
+      "dana": 1
+    }
+  ]
+}
